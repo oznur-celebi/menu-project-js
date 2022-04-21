@@ -76,24 +76,64 @@ const menu = [
 
   const sectionCenter =document.querySelector(".section-center");
   console.log(sectionCenter);
-  window.addEventListener("DOMContentLoaded", function (){
-      console.log("hallo")
-      let displayMenu = menu.map(function(item){
-         console.log(item.innerHtml);
 
-          return  sectionCenter.innerHTML +=`<article class="menu-item">
-          <img src=${item.img} class="photo" alt="menu-item">
-          <div class="item-info">
-          <header>
-            <h4>${item.title}</h4>
-            <h4 class= "price">${item.price}</h4>
-          </header>  
-          <p class="item-text">
-          ${item.desc}
-          </p>
-          </div>
-        </article> `;
-      });
+  const filterBtns = document.querySelectorAll(".filter-btn");
+  console.log(filterBtns);
+
+//load items
+
+  window.addEventListener("DOMContentLoaded", function (){
+    displayMenuItems(menu)
     //  displayMenu= displayMenu.join("")
     //  sectionCenter.innerHTML =displayMenu;
   })
+
+  //filter items
+
+
+
+
+
+filterBtns.forEach(function (btn) {
+  btn.addEventListener("click", function (e) {
+    // console.log(e.currentTarget.dataset);
+    const category = e.currentTarget.dataset.id;
+    const menuCategory = menu.filter(function (menuItem) {
+      // console.log(menuItem.category);
+      if (menuItem.category === category) {
+        return menuItem;
+      }
+    });
+    if (category === "all") {
+      displayMenuItems(menu);
+    } else {
+      displayMenuItems(menuCategory);
+    }
+  });
+ });
+
+
+
+  function displayMenuItems(menuItems){
+    let displayMenu = menuItems.map(function(item){
+        // console.log(item.innerHtml);
+
+         return  `<article class="menu-item">
+         <img src=${item.img} class="photo" alt="menu-item">
+         <div class="item-info">
+         <header>
+           <h4>${item.title}</h4>
+           <h4 class= "price">${item.price}</h4>
+         </header>  
+         <p class="item-text">
+         ${item.desc}
+         </p>
+         </div>
+       </article> `;
+     });
+     displayMenu =displayMenu.join("");
+     sectionCenter.innerHTML =displayMenu
+
+    }
+
+ 
