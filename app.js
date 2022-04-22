@@ -83,7 +83,7 @@ const menu = [
       id: 11,
       title: "Bulgur Salad",
       category: "salad",
-      price: 39.99,
+      price: 9.99,
       img: "./images/item-11.jpg",
       desc: `Its zingy, spicy, and fresh taste will excite your palate and its vibrant colours will brighten up your table.`,
     },
@@ -99,64 +99,15 @@ const menu = [
 
   window.addEventListener("DOMContentLoaded", function (){
     displayMenuItems(menu)
-    const array =["all"]
-         
-  // const categories =menu.map(function(item){
-     
-  //         if(!array.includes(item.category)){
-  //            array.push(item.category);
-  //       }
-  //       return array;
-  //     });
-  
-  const categories =menu.reduce(function(values, item){
-    if(!values.includes(item.category)){
-      values.push(item.category);
-    }
-    return values
-  } ,["all"]);
-
-  //  console.log(array);
-  // console.log(categories);
-
-    const categoryBtns = categories.map((category) => `<button class="filter-btn btn" type="button"  data-id =${category}>${category}</button>`).join("");
-    console.log(categoryBtns);
-    container.innerHTML =categoryBtns;
-    const filterBtns = document.querySelectorAll(".filter-btn");
-    console.log(filterBtns);
-
-
-//filter items
-
-
-
-filterBtns.forEach(function (btn) {
-  btn.addEventListener("click", function (e) {
-    // console.log(e.currentTarget.dataset);
-    const category = e.currentTarget.dataset.id;
-    const menuCategory = menu.filter(function (menuItem) {
-      //console.log(menuItem.category);
-      if (menuItem.category === category) {
-        console.log(menuItem);
-        return menuItem;
-
-      }
-      
-    });
-    if (category === "all") {
-      displayMenuItems(menu);
-    } else {
-      displayMenuItems(menuCategory);
-    }
-  });
- });
+    displayMenuBtns(menu)
+    
 
 });
 
 
 
-  function displayMenuItems(menuItems){
-    let displayMenu = menuItems.map(function(item){
+  function displayMenuItems(menu){
+    let displayMenu = menu.map(function(item){
         // console.log(item.innerHtml);
 
          return  `<article class="menu-item">
@@ -176,5 +127,58 @@ filterBtns.forEach(function (btn) {
      sectionCenter.innerHTML =displayMenu
 
     }
+
+  function displayMenuBtns(){
+    const array =["all"]
+         
+    // const categories =menu.map(function(item){
+       
+    //         if(!array.includes(item.category)){
+    //            array.push(item.category);
+    //       }
+    //       return array;
+    //     });
+    
+    const categories =menu.reduce(function(values, item){
+      if(!values.includes(item.category)){
+        values.push(item.category);
+      }
+      return values
+    } ,["all"]);
+  
+    //  console.log(array);
+    // console.log(categories);
+  
+      const categoryBtns = categories.map((category) => `<button class="filter-btn btn" type="button"  data-id =${category}>${category}</button>`).join("");
+      console.log(categoryBtns);
+      container.innerHTML =categoryBtns;
+      // const filterBtns = document.querySelectorAll(".filter-btn");
+      const filterBtns =container.querySelectorAll(".filter-btn")
+      console.log(filterBtns);
+  
+  
+  //filter items
+  
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      // console.log(e.currentTarget.dataset);
+      const category = e.currentTarget.dataset.id;
+      const menuCategory = menu.filter(function (menuItem) {
+        //console.log(menuItem.category);
+        if (menuItem.category === category) {
+          console.log(menuItem);
+          return menuItem;
+  
+        }
+        
+      });
+      if (category === "all") {
+        displayMenuItems(menu);
+      } else {
+        displayMenuItems(menuCategory);
+      }
+    });
+   });
+  }
 
  
