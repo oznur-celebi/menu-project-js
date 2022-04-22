@@ -71,26 +71,62 @@ const menu = [
       img: "./images/item-9.jpeg",
       desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
     },
+    {
+      id: 10,
+      title: "steak dinner",
+      category: "dinner",
+      price: 39.99,
+      img: "./images/item-10.jpeg",
+      desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
+    },
+    {
+      id: 11,
+      title: "Bulgur Salad",
+      category: "salad",
+      price: 39.99,
+      img: "./images/item-11.jpg",
+      desc: `Its zingy, spicy, and fresh taste will excite your palate and its vibrant colours will brighten up your table.`,
+    },
   ];
 
 
   const sectionCenter =document.querySelector(".section-center");
   console.log(sectionCenter);
-
-  const filterBtns = document.querySelectorAll(".filter-btn");
-  console.log(filterBtns);
+  const container =document.querySelector(".btn-container");
+  
 
 //load items
 
   window.addEventListener("DOMContentLoaded", function (){
     displayMenuItems(menu)
-    //  displayMenu= displayMenu.join("")
-    //  sectionCenter.innerHTML =displayMenu;
-  })
+    const array =["all"]
+         
+  // const categories =menu.map(function(item){
+     
+  //         if(!array.includes(item.category)){
+  //            array.push(item.category);
+  //       }
+  //       return array;
+  //     });
+  
+  const categories =menu.reduce(function(values, item){
+    if(!values.includes(item.category)){
+      values.push(item.category);
+    }
+    return values
+  } ,["all"]);
 
-  //filter items
+  //  console.log(array);
+  // console.log(categories);
+
+    const categoryBtns = categories.map((category) => `<button class="filter-btn btn" type="button"  data-id =${category}>${category}</button>`).join("");
+    console.log(categoryBtns);
+    container.innerHTML =categoryBtns;
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    console.log(filterBtns);
 
 
+//filter items
 
 
 
@@ -99,10 +135,13 @@ filterBtns.forEach(function (btn) {
     // console.log(e.currentTarget.dataset);
     const category = e.currentTarget.dataset.id;
     const menuCategory = menu.filter(function (menuItem) {
-      // console.log(menuItem.category);
+      //console.log(menuItem.category);
       if (menuItem.category === category) {
+        console.log(menuItem);
         return menuItem;
+
       }
+      
     });
     if (category === "all") {
       displayMenuItems(menu);
@@ -111,6 +150,8 @@ filterBtns.forEach(function (btn) {
     }
   });
  });
+
+});
 
 
 
